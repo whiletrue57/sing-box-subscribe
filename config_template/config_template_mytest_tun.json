@@ -1,0 +1,340 @@
+{
+    "log": {
+        "level": "info",
+        "timestamp": true
+    },
+    "experimental": {
+        "clash_api": {
+            "external_controller": "127.0.0.1:9090",
+            "external_ui": "ui",
+            "secret": "",
+            "external_ui_download_url": "https://mirror.ghproxy.com/https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip",
+            "external_ui_download_detour": "direct",
+            "default_mode": "rule"
+        },
+        "cache_file": {
+            "enabled": true,
+            "store_fakeip": false
+        }
+    },
+    "dns": {
+        "servers": [
+            {
+                "tag": "default-dns",
+                "address": "114.114.114.114",
+                "detour": "direct-out"
+            },
+            {
+                "tag": "system-dns",
+                "address": "local",
+                "detour": "direct-out"
+            },
+            {
+                "tag": "block-dns",
+                "address": "rcode://name_error"
+            },
+            {
+                "tag": "google",
+                "address": "https://dns.google/dns-query",
+                "address_resolver": "default-dns",
+                "address_strategy": "ipv4_only",
+                "strategy": "ipv4_only",
+                "client_subnet": "202.106.195.68"
+            }
+        ],
+        "rules": [
+            {
+                "domain": [
+                    "ghproxy.com",
+                    "cdn.jsdelivr.net",
+                    "testingcf.jsdelivr.net"
+                ],
+                "server": "default-dns"
+            },
+            {
+                "rule_set": "geosite-category-ads-all",
+                "server": "block-dns"
+            },
+            {
+                "outbound": [
+                    "any"
+                ],
+                "server": "default-dns"
+            },
+            {
+                "query_type": "HTTPS",
+                "server": "block-dns"
+            },
+            {
+                "clash_mode": "block",
+                "server": "block-dns"
+            },
+            {
+                "clash_mode": "direct",
+                "server": "default-dns"
+            },
+            {
+                "clash_mode": "global",
+                "server": "google"
+            },
+            {
+                "rule_set": [
+                    "cnsite"
+                ],
+                "server": "default-dns"
+            },
+            {
+                "rule_set": "geosite-geolocation-!cn",
+                "server": "google"
+            }
+        ],
+        "strategy": "ipv4_only",
+        "disable_cache": false,
+        "disable_expire": false,
+        "independent_cache": false,
+        "final": "google"
+    },
+    "inbounds": [
+        {
+            "type": "tun",
+            "inet4_address": "198.18.0.1/16",
+            "mtu": 9000,
+            "auto_route": true,
+            "strict_route": true,
+            "sniff": true,
+            "endpoint_independent_nat": false,
+            "stack": "system",
+            "platform": {
+                "http_proxy": {
+                    "enabled": true,
+                    "server": "127.0.0.1",
+                    "server_port": 2080
+                }
+            }
+        },
+        {
+            "type": "mixed",
+            "listen": "127.0.0.1",
+            "listen_port": 2080,
+            "sniff": true,
+            "users": []
+        }
+    ],
+    "outbounds": [
+        {
+            "type": "direct",
+            "tag": "direct-out",
+            "routing_mark": 100
+        },
+        {
+            "type": "block",
+            "tag": "block-out"
+        },
+        {
+            "type": "dns",
+            "tag": "dns-out"
+        },
+        {
+            "type": "selector",
+            "tag": "手动选择",
+            "outbounds": [
+                "自动选择",
+                "direct-out",
+                "block-out",
+                "{all}"
+            ],
+            "default": "自动选择"
+        },
+        {
+            "tag": "自动选择",
+            "type": "urltest",
+            "outbounds": [
+                "{all}"
+            ],
+            "url": "http://www.gstatic.com/generate_204",
+            "interval": "10m",
+            "tolerance": 50
+        },
+        {
+            "tag": "苹果",
+            "type": "selector",
+            "outbounds": [
+                "手动选择",
+                "自动选择",
+                "{all}"
+            ],
+            "default": "手动选择"
+        },
+        {
+            "tag": "微软",
+            "type": "selector",
+            "outbounds": [
+                "手动选择",
+                "自动选择",
+                "{all}"
+            ],
+            "default": "手动选择"
+        },
+        {
+            "tag": "OpenAI",
+            "type": "selector",
+            "outbounds": [
+                "手动选择",
+                "自动选择",
+                "{all}"
+            ],
+            "default": "手动选择"
+        },
+        {
+            "type": "selector",
+            "tag": "GLOBAL",
+            "outbounds": [
+                "自动选择",
+                "手动选择",
+                "{all}"
+            ],
+            "default": "手动选择"
+        }
+    ],
+    "route": {
+        "rules": [
+            {
+                "inbound": "dns-in",
+                "outbound": "dns-out"
+            },
+            {
+                "protocol": "dns",
+                "outbound": "dns-out"
+            },
+            {
+                "rule_set": "geosite-category-ads-all",
+                "outbound": "block-out"
+            },
+            {
+                "domain_suffix": [
+                    "browserleaks.com"
+                ],
+                "outbound": "GLOBAL"
+            },
+            {
+                "domain": [
+                    "clash.razord.top",
+                    "yacd.metacubex.one",
+                    "yacd.haishan.me",
+                    "d.metacubex.one"
+                ],
+                "outbound": "direct-out"
+            },
+            {
+                "ip_is_private": true,
+                "outbound": "direct-out"
+            },
+            {
+                "protocol": "quic",
+                "outbound": "block-out"
+            },
+            {
+                "clash_mode": "block",
+                "outbound": "block-out"
+            },
+            {
+                "clash_mode": "direct",
+                "outbound": "direct-out"
+            },
+            {
+                "clash_mode": "global",
+                "outbound": "GLOBAL"
+            },
+            {
+                "rule_set": [
+                    "cnip",
+                    "cnsite"
+                ],
+                "outbound": "direct-out"
+            },
+            {
+                "rule_set": [
+                    "geoip-apple",
+                    "geosite-apple",
+                    "geosite-amazon"
+                ],
+                "outbound": "苹果"
+            },
+            {
+                "rule_set": "geosite-microsoft",
+                "outbound": "微软"
+            },
+            {
+                "rule_set": "geosite-openai",
+                "outbound": "OpenAI"
+            }
+        ],
+        "rule_set": [
+            {
+                "type": "remote",
+                "tag": "cnip",
+                "format": "binary",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/geoip/cn.srs",
+                "download_detour": "自动选择"
+            },
+            {
+                "type": "remote",
+                "tag": "cnsite",
+                "format": "binary",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/geosite/cn.srs",
+                "download_detour": "自动选择"
+            },
+            {
+                "tag": "geosite-category-ads-all",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
+                "download_detour": "direct-out"
+            },
+            {
+                "tag": "geoip-apple",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo-lite/geoip/apple.srs",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-apple",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/apple.srs",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-amazon",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/amazon.srs",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-microsoft",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft.srs",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-geolocation-!cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/geolocation-!cn.srs",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-openai",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/Toperlock/sing-box-geosite/main/rule/OpenAI.srs",
+                "download_detour": "direct"
+            }
+        ],
+        "auto_detect_interface": true,
+        "final": "手动选择"
+    }
+}
