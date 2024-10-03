@@ -107,7 +107,8 @@
                 "auto",
                 "direct",
                 "Proxy"
-            ]
+            ],
+            "default": "Proxy"
         },
         {
             "tag": "Microsoft",
@@ -116,7 +117,8 @@
                 "auto",
                 "direct",
                 "Proxy"
-            ]
+            ],
+            "default": "Proxy"
         },
         {
             "tag": "Global",
@@ -125,7 +127,8 @@
                 "auto",
                 "direct",
                 "Proxy"
-            ]
+            ],
+            "default": "Proxy"
         },
         {
             "tag": "AdBlock",
