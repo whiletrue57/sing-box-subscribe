@@ -121,6 +121,16 @@
             "default": "Proxy"
         },
         {
+            "tag": "Cloudflare",
+            "type": "selector",
+            "outbounds": [
+                "auto",
+                "direct",
+                "Proxy"
+            ],
+            "default": "Proxy"
+        },
+        {
             "tag": "Global",
             "type": "selector",
             "outbounds": [
@@ -182,7 +192,7 @@
                 "rule_set": [
                     "geosite-cloudflare"
                 ],
-                "outbound": "direct"
+                "outbound": "Cloudflare"
             },
             {
                 "rule_set": "geosite-category-ads-all",
