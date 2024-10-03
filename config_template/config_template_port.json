@@ -205,7 +205,8 @@
             {
                 "rule_set": [
                     "geoip-cn",
-                    "geosite-cn"
+                    "geosite-cn",
+                    "geosite-cloudflare"
                 ],
                 "outbound": "direct"
             }
@@ -265,6 +266,13 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-cloudflare",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cloudflare.srs",
                 "download_detour": "direct"
             }
         ]
