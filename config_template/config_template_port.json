@@ -1,0 +1,272 @@
+{
+    "log": {
+        "level": "info",
+        "timestamp": true
+    },
+    "experimental": {
+        "clash_api": {
+            "external_controller": "127.0.0.1:9091",
+            "external_ui": "ui",
+            "secret": "",
+            "external_ui_download_url": "https://ghp.ci/https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip",
+            "external_ui_download_detour": "direct",
+            "default_mode": "rule"
+        },
+        "cache_file": {
+            "enabled": true,
+            "store_fakeip": false
+        }
+    },
+    "dns": {
+        "servers": [
+            {
+                "tag": "proxyDns",
+                "address": "tls://8.8.8.8",
+                "detour": "Proxy"
+            },
+            {
+                "tag": "localDns",
+                "address": "https://223.5.5.5/dns-query",
+                "detour": "direct"
+            },
+            {
+                "tag": "block",
+                "address": "rcode://success"
+            }
+        ],
+        "rules": [
+            {
+                "rule_set": "geosite-category-ads-all",
+                "server": "block"
+            },
+            {
+                "outbound": "any",
+                "server": "localDns",
+                "disable_cache": true
+            },
+            {
+                "rule_set": "geosite-cn",
+                "server": "localDns"
+            },
+            {
+                "clash_mode": "direct",
+                "server": "localDns"
+            },
+            {
+                "clash_mode": "global",
+                "server": "proxyDns"
+            },
+            {
+                "rule_set": "geosite-geolocation-!cn",
+                "server": "proxyDns"
+            }
+        ],
+        "final": "proxyDns",
+        "strategy": "ipv4_only"
+    },
+    "inbounds": [
+        {
+            "type": "mixed",
+            "listen": "127.0.0.1",
+            "listen_port": 2080,
+            "sniff": true,
+            "users": []
+        }
+    ],
+    "outbounds": [
+        {
+            "tag": "Proxy",
+            "type": "selector",
+            "outbounds": [
+                "auto",
+                "direct",
+                "{all}"
+            ]
+        },
+        {
+            "tag": "Apple",
+            "type": "selector",
+            "outbounds": [
+                "auto",
+                "direct",
+                "Proxy"
+            ],
+            "default": "Proxy"
+        },
+        {
+            "tag": "Microsoft",
+            "type": "selector",
+            "outbounds": [
+                "auto",
+                "direct",
+                "Proxy"
+            ],
+            "default": "Proxy"
+        },
+        {
+            "tag": "Global",
+            "type": "selector",
+            "outbounds": [
+                "auto",
+                "direct",
+                "Proxy"
+            ],
+            "default": "Proxy"
+        },
+        {
+            "tag": "AdBlock",
+            "type": "selector",
+            "outbounds": [
+                "block",
+                "direct"
+            ]
+        },
+        {
+            "tag": "auto",
+            "type": "urltest",
+            "outbounds": [
+                "{all}"
+            ],
+            "url": "http://www.gstatic.com/generate_204",
+            "interval": "10m",
+            "tolerance": 50
+        },
+        {
+            "type": "direct",
+            "tag": "direct"
+        },
+        {
+            "type": "dns",
+            "tag": "dns-out"
+        },
+        {
+            "type": "block",
+            "tag": "block"
+        }
+    ],
+    "route": {
+        "auto_detect_interface": true,
+        "final": "Proxy",
+        "rules": [
+            {
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                    {
+                        "port": 53
+                    },
+                    {
+                        "protocol": "dns"
+                    }
+                ],
+                "outbound": "dns-out"
+            },
+            {
+                "rule_set": "geosite-category-ads-all",
+                "outbound": "AdBlock"
+            },
+            {
+                "clash_mode": "direct",
+                "outbound": "direct"
+            },
+            {
+                "clash_mode": "global",
+                "outbound": "Proxy"
+            },
+            {
+                "domain": [
+                    "clash.razord.top",
+                    "yacd.metacubex.one",
+                    "yacd.haishan.me",
+                    "d.metacubex.one"
+                ],
+                "outbound": "direct"
+            },
+            {
+                "ip_is_private": true,
+                "outbound": "direct"
+            },
+            {
+                "rule_set": [
+                    "geoip-apple",
+                    "geosite-apple",
+                    "geosite-amazon"
+                ],
+                "outbound": "Apple"
+            },
+            {
+                "rule_set": "geosite-microsoft",
+                "outbound": "Microsoft"
+            },
+            {
+                "rule_set": "geosite-geolocation-!cn",
+                "outbound": "Global"
+            },
+            {
+                "rule_set": [
+                    "geoip-cn",
+                    "geosite-cn"
+                ],
+                "outbound": "direct"
+            }
+        ],
+        "rule_set": [
+            {
+                "tag": "geosite-category-ads-all",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geoip-apple",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geoip/apple.srs",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-apple",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/apple.srs",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-amazon",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/amazon.srs",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-microsoft",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft.srs",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-geolocation-!cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geoip-cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
+                "download_detour": "direct"
+            }
+        ]
+    }
+}
