@@ -179,6 +179,12 @@
                 "outbound": "dns-out"
             },
             {
+                "rule_set": [
+                    "geosite-cloudflare"
+                ],
+                "outbound": "direct"
+            },
+            {
                 "rule_set": "geosite-category-ads-all",
                 "outbound": "AdBlock"
             },
@@ -222,9 +228,7 @@
             {
                 "rule_set": [
                     "geoip-cn",
-                    "geosite-cn",
-                    "geosite-cloudflare"
-                ],
+                    "geosite-cn"                ],
                 "outbound": "direct"
             }
         ],
