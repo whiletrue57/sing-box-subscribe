@@ -344,14 +344,14 @@
                 "type": "remote",
                 "format": "source",
                 "url": "https://gitlab.com/wyofnfuk/myrule/-/raw/main/myrules_proxy.json",
-                "download_detour": "direct"
+                "download_detour": "DIRECT"
             },
             {
                 "tag": "myrules_direct",
                 "type": "remote",
                 "format": "source",
                 "url": "https://gitlab.com/wyofnfuk/myrule/-/raw/main/myrules_direct.json",
-                "download_detour": "direct"
+                "download_detour": "DIRECT"
             }
         ],
         "auto_detect_interface": true,
