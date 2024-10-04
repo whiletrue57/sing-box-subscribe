@@ -40,8 +40,20 @@
                 "disable_cache": true
             },
             {
+                "clash_mode": "direct",
+                "server": "dns_direct"
+            },
+            {
+                "clash_mode": "global",
+                "server": "dns_proxy"
+            },
+            {
                 "rule_set": "geosite-geolocation-!cn",
                 "server": "dns_proxy"
+            },
+            {
+                "rule_set": "geosite-cn",
+                "server": "dns_direct"
             }
         ],
         "final": "dns_proxy"
@@ -215,7 +227,10 @@
                 "outbound": "🎯 全球直连"
             },
             {
-                "rule_set": "geoip-cn",
+                "rule_set": [
+                    "geoip-cn",
+                    "geosite-cn"
+                ],
                 "outbound": "🎯 全球直连"
             }
         ],
@@ -302,6 +317,13 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "geosite-cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
                 "download_detour": "DIRECT"
             },
             {
