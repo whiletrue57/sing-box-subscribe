@@ -56,7 +56,7 @@
                 "server": "dns_proxy"
             }
         ],
-        "final": "dns_direct",
+        "final": "dns_proxy",
         "independent_cache": true,
         "fakeip": {
             "enabled": true,
