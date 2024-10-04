@@ -1,0 +1,330 @@
+{
+    "log": {
+        "disabled": false,
+        "level": "info",
+        "timestamp": true
+    },
+    "dns": {
+        "servers": [
+            {
+                "tag": "dns_proxy",
+                "address": "tls://1.1.1.1",
+                "address_resolver": "dns_resolver"
+            },
+            {
+                "tag": "dns_direct",
+                "address": "h3://dns.alidns.com/dns-query",
+                "address_resolver": "dns_resolver",
+                "detour": "DIRECT"
+            },
+            {
+                "tag": "dns_resolver",
+                "address": "223.5.5.5",
+                "detour": "DIRECT"
+            },
+            {
+                "tag": "block",
+                "address": "rcode://success"
+            }
+        ],
+        "rules": [
+            {
+                "outbound": [
+                    "any"
+                ],
+                "server": "dns_resolver"
+            },
+            {
+                "rule_set": "geosite-category-ads-all",
+                "server": "dns_block",
+                "disable_cache": true
+            },
+            {
+                "rule_set": "geosite-geolocation-!cn",
+                "server": "dns_proxy"
+            }
+        ],
+        "final": "dns_proxy"
+    },
+    "inbounds": [
+        {
+            "type": "mixed",
+            "tag": "mixed-in",
+            "listen": "0.0.0.0",
+            "listen_port": 2080
+        }
+    ],
+    "outbounds": [
+        {
+            "type": "direct",
+            "tag": "DIRECT"
+        },
+        {
+            "type": "block",
+            "tag": "REJECT"
+        },
+        {
+            "type": "dns",
+            "tag": "dns-out"
+        },
+        {
+            "type": "selector",
+            "tag": "🚀 节点选择",
+            "outbounds": [
+                "♻️ 自动选择",
+                "🔯 故障转移",
+                "🔮 负载均衡",
+                "DIRECT",
+                "{all}"
+            ]
+        },
+        {
+            "type": "urltest",
+            "tag": "♻️ 自动选择",
+            "outbounds": [
+                "{all}"
+            ],
+            "url": "http://www.gstatic.com/generate_204",
+            "interval": "5m",
+            "tolerance": 50
+        },
+        {
+            "type": "urltest",
+            "tag": "🔯 故障转移",
+            "outbounds": [
+                "{all}"
+            ]
+        },
+        {
+            "type": "urltest",
+            "tag": "🔮 负载均衡",
+            "outbounds": [
+                "{all}"
+            ]
+        },
+        {
+            "type": "selector",
+            "tag": "🎯 全球直连",
+            "outbounds": [
+                "DIRECT",
+                "🚀 节点选择",
+                "♻️ 自动选择"
+            ]
+        },
+        {
+            "type": "selector",
+            "tag": "🛑 全球拦截",
+            "outbounds": [
+                "REJECT",
+                "DIRECT"
+            ]
+        },
+        {
+            "type": "selector",
+            "tag": "🐟 漏网之鱼",
+            "outbounds": [
+                "🚀 节点选择",
+                "🎯 全球直连",
+                "♻️ 自动选择",
+                "🔯 故障转移",
+                "🔮 负载均衡",
+                "{all}"
+            ]
+        },
+        {
+            "type": "selector",
+            "tag": "GLOBAL",
+            "outbounds": [
+                "🚀 节点选择",
+                "DIRECT",
+                "♻️ 自动选择",
+                "{all}"
+            ]
+        }
+    ],
+    "route": {
+        "rules": [
+            {
+                "clash_mode": "Global",
+                "outbound": "GLOBAL"
+            },
+            {
+                "clash_mode": "Direct",
+                "outbound": "DIRECT"
+            },
+            {
+                "protocol": "dns",
+                "outbound": "dns-out"
+            },
+            {
+                "rule_set": "LocalAreaNetwork",
+                "outbound": "🎯 全球直连"
+            },
+            {
+                "rule_set": "UnBan",
+                "outbound": "🎯 全球直连"
+            },
+            {
+                "rule_set": "BanAD",
+                "outbound": "🛑 全球拦截"
+            },
+            {
+                "rule_set": "BanProgramAD",
+                "outbound": "🛑 全球拦截"
+            },
+            {
+                "rule_set": "GoogleCN",
+                "outbound": "🎯 全球直连"
+            },
+            {
+                "rule_set": "SteamCN",
+                "outbound": "🎯 全球直连"
+            },
+            {
+                "rule_set": "Telegram",
+                "outbound": "🚀 节点选择"
+            },
+            {
+                "rule_set": "ProxyMedia",
+                "process_name": [
+                    "com.viu.pad",
+                    "com.viu.phone",
+                    "com.vuclip.viu"
+                ],
+                "outbound": "🚀 节点选择"
+            },
+            {
+                "rule_set": "ProxyGFWlist",
+                "outbound": "🚀 节点选择"
+            },
+            {
+                "rule_set": "ChinaDomain",
+                "outbound": "🎯 全球直连"
+            },
+            {
+                "rule_set": "ChinaCompanyIp",
+                "outbound": "🎯 全球直连"
+            },
+            {
+                "rule_set": "geoip-cn",
+                "outbound": "🎯 全球直连"
+            }
+        ],
+        "rule_set": [
+            {
+                "tag": "LocalAreaNetwork",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://ghp.ci/https://github.com/KaringX/karing-ruleset/raw/refs/heads/sing/ACL4SSR/LocalAreaNetwork.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "UnBan",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://ghp.ci/https://github.com/KaringX/karing-ruleset/raw/refs/heads/sing/ACL4SSR/UnBan.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "BanAD",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://ghp.ci/https://github.com/KaringX/karing-ruleset/raw/refs/heads/sing/ACL4SSR/BanAD.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "BanProgramAD",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://ghp.ci/https://github.com/KaringX/karing-ruleset/raw/refs/heads/sing/ACL4SSR/BanProgramAD.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "GoogleCN",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://ghp.ci/https://github.com/KaringX/karing-ruleset/raw/refs/heads/sing/ACL4SSR/GoogleCN.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "SteamCN",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://ghp.ci/https://github.com/KaringX/karing-ruleset/raw/refs/heads/sing/ACL4SSR/Ruleset/SteamCN.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "Telegram",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://ghp.ci/https://github.com/KaringX/karing-ruleset/raw/refs/heads/sing/ACL4SSR/Ruleset/Telegram.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "ProxyMedia",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://ghp.ci/https://github.com/KaringX/karing-ruleset/raw/refs/heads/sing/ACL4SSR/ProxyMedia.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "ProxyGFWlist",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://ghp.ci/https://github.com/KaringX/karing-ruleset/raw/refs/heads/sing/ACL4SSR/ProxyGFWlist.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "ChinaDomain",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://ghp.ci/https://github.com/KaringX/karing-ruleset/raw/refs/heads/sing/ACL4SSR/ChinaDomain.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "ChinaCompanyIp",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://ghp.ci/https://github.com/KaringX/karing-ruleset/raw/refs/heads/sing/ACL4SSR/ChinaCompanyIp.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "geoip-cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "geosite-category-ads-all",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "geosite-geolocation-!cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
+                "download_detour": "DIRECT"
+            }
+        ],
+        "auto_detect_interface": true,
+        "final": "🐟 漏网之鱼"
+    },
+    "experimental": {
+        "clash_api": {
+            "external_controller": "0.0.0.0:9090",
+            "external_ui": "ui",
+            "secret": "",
+            "external_ui_download_url": "https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip",
+            "external_ui_download_detour": "♻️ 自动选择",
+            "default_mode": "rule"
+        },
+        "cache_file": {
+            "enabled": true,
+            "store_fakeip": false
+        }
+    }
+}
