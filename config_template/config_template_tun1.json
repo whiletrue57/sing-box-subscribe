@@ -419,7 +419,10 @@
         "outbound": "select"
       },
       {
-        "rule_set": "geoip-cn",
+        "rule_set": [
+          "geoip-cn",
+          "geosite-cn"
+        ],
         "outbound": "direct"
       },
       {
@@ -543,6 +546,13 @@
         "tag": "Bilibili",
         "format": "source",
         "url": "https://ghp.ci/https://raw.githubusercontent.com/yangchuansheng/sing-box-geosite/main/rule/Bilibili.json",
+        "download_detour": "direct"
+      },
+      {
+        "tag": "geosite-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
         "download_detour": "direct"
       }
     ],
