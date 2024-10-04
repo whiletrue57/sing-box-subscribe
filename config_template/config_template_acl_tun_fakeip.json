@@ -245,7 +245,7 @@
                 "outbound": "🎯 全球直连"
             },
             {
-                "geoip": "cn",
+                "rule_set": "geoip-cn",
                 "outbound": "🎯 全球直连"
             }
         ],
@@ -325,6 +325,13 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://ghp.ci/https://github.com/KaringX/karing-ruleset/raw/refs/heads/sing/ACL4SSR/ChinaCompanyIp.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "geoip-cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
                 "download_detour": "DIRECT"
             }
         ],
