@@ -63,13 +63,6 @@
             "inet4_range": "198.18.0.0/15"
         }
     },
-    "ntp": {
-        "enabled": true,
-        "server": "time.apple.com",
-        "server_port": 123,
-        "interval": "30m",
-        "detour": "DIRECT"
-    },
     "inbounds": [
         {
             "type": "mixed",
