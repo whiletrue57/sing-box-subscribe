@@ -178,6 +178,14 @@
                 "outbound": "dns-out"
             },
             {
+                "rule_set": "myrules_direct",
+                "outbound": "🎯 全球直连"
+            },
+            {
+                "rule_set": "myrules_proxy",
+                "outbound": "🚀 节点选择"
+            },
+            {
                 "rule_set": "LocalAreaNetwork",
                 "outbound": "🎯 全球直连"
             },
@@ -339,6 +347,20 @@
                 "format": "binary",
                 "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
                 "download_detour": "DIRECT"
+            },
+            {
+                "tag": "myrules_proxy",
+                "type": "remote",
+                "format": "source",
+                "url": "https://gitlab.com/wyofnfuk/myrule/-/raw/main/myrules_proxy.json",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "myrules_direct",
+                "type": "remote",
+                "format": "source",
+                "url": "https://gitlab.com/wyofnfuk/myrule/-/raw/main/myrules_direct.json",
+                "download_detour": "direct"
             }
         ],
         "auto_detect_interface": true,
