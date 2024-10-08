@@ -532,14 +532,14 @@
                 "tag": "WeChat",
                 "format": "binary",
                 "url": "https://ghp.ci/https://raw.githubusercontent.com/yangchuansheng/sing-box-geosite/main/rule/WeChat.srs",
-                "download_detour": "direct"
+                "download_detour": "DIRECT"
             },
             {
                 "type": "remote",
                 "tag": "Bilibili",
                 "format": "binary",
                 "url": "https://ghp.ci/https://raw.githubusercontent.com/yangchuansheng/sing-box-geosite/main/rule/Bilibili.srs",
-                "download_detour": "direct"
+                "download_detour": "DIRECT"
             }
         ],
         "auto_detect_interface": true,
