@@ -48,6 +48,46 @@
                 "server": "dns_proxy"
             },
             {
+                "process_name": [
+                    "TencentMeeting",
+                    "NemoDesktop",
+                    "ToDesk",
+                    "ToDesk_Service",
+                    "WeChat",
+                    "Tailscale",
+                    "wireguard-go",
+                    "Tunnelblick",
+                    "softwareupdated",
+                    "kubectl"
+                ],
+                "server": "dns_direct"
+            },
+            {
+                "domain_suffix": [
+                    "icloudnative.io",
+                    "fuckcloudnative.io",
+                    "sealos.io",
+                    "cdn.jsdelivr.us"
+                ],
+                "server": "dns_direct"
+            },
+            {
+                "process_name": [
+                    "DropboxMacUpdate",
+                    "Dropbox"
+                ],
+                "server": "dns_proxy"
+            },
+            {
+                "package_name": [
+                    "com.google.android.youtube",
+                    "com.android.vending",
+                    "org.telegram.messenger",
+                    "org.telegram.plus"
+                ],
+                "server": "dns_proxy"
+            },
+            {
                 "rule_set": "geosite-geolocation-!cn",
                 "server": "dns_proxy"
             },
@@ -72,7 +112,66 @@
             "auto_route": true,
             "strict_route": true,
             "stack": "mixed",
-            "sniff": true
+            "sniff": true,
+            "exclude_package": [
+                "cmb.pb",
+                "cn.gov.pbc.dcep",
+                "com.MobileTicket",
+                "com.adguard.android",
+                "com.ainemo.dragoon",
+                "com.alibaba.android.rimet",
+                "com.alicloud.databox",
+                "com.amazing.cloudisk.tv",
+                "com.autonavi.minimap",
+                "com.bilibili.app.in",
+                "com.bishua666.luxxx1",
+                "com.cainiao.wireless",
+                "com.chebada",
+                "com.chinamworld.main",
+                "com.cmbchina.ccd.pluto.cmbActivity",
+                "com.coolapk.market",
+                "com.ctrip.ct",
+                "com.dianping.v1",
+                "com.douban.frodo",
+                "com.eg.android.AlipayGphone",
+                "com.farplace.qingzhuo",
+                "com.hanweb.android.zhejiang.activity",
+                "com.leoao.fitness",
+                "com.lucinhu.bili_you",
+                "com.mikrotik.android.tikapp",
+                "com.moji.mjweather",
+                "com.motorola.cn.calendar",
+                "com.motorola.cn.lrhealth",
+                "com.netease.cloudmusic",
+                "com.sankuai.meituan",
+                "com.sina.weibo",
+                "com.smartisan.notes",
+                "com.sohu.inputmethod.sogou.moto",
+                "com.sonelli.juicessh",
+                "com.ss.android.article.news",
+                "com.ss.android.lark",
+                "com.ss.android.ugc.aweme",
+                "com.tailscale.ipn",
+                "com.taobao.idlefish",
+                "com.taobao.taobao",
+                "com.tencent.mm",
+                "com.tencent.mp",
+                "com.tencent.soter.soterserver",
+                "com.tencent.wemeet.app",
+                "com.tencent.weread",
+                "com.tencent.wework",
+                "com.ttxapps.wifiadb",
+                "com.unionpay",
+                "com.unnoo.quan",
+                "com.wireguard.android",
+                "com.xingin.xhs",
+                "com.xunmeng.pinduoduo",
+                "com.zui.zhealthy",
+                "ctrip.android.view",
+                "io.kubenav.kubenav",
+                "org.geekbang.geekTime",
+                "tv.danmaku.bili"
+            ]
         }
     ],
     "outbounds": [
@@ -97,6 +196,14 @@
                 "🔮 负载均衡",
                 "DIRECT",
                 "{all}"
+            ],
+            "filter": [
+                {
+                    "action": "exclude",
+                    "keywords": [
+                        "官网|网站|剩余|流量|过期|时间|期|地址|教程"
+                    ]
+                }
             ]
         },
         {
@@ -107,13 +214,29 @@
             ],
             "url": "http://www.gstatic.com/generate_204",
             "interval": "5m",
-            "tolerance": 200
+            "tolerance": 200,
+            "filter": [
+                {
+                    "action": "exclude",
+                    "keywords": [
+                        "官网|网站|剩余|流量|过期|时间|期|地址|教程"
+                    ]
+                }
+            ]
         },
         {
             "type": "urltest",
             "tag": "🔯 故障转移",
             "outbounds": [
                 "{all}"
+            ],
+            "filter": [
+                {
+                    "action": "exclude",
+                    "keywords": [
+                        "官网|网站|剩余|流量|过期|时间|期|地址|教程"
+                    ]
+                }
             ]
         },
         {
@@ -121,6 +244,14 @@
             "tag": "🔮 负载均衡",
             "outbounds": [
                 "{all}"
+            ],
+            "filter": [
+                {
+                    "action": "exclude",
+                    "keywords": [
+                        "官网|网站|剩余|流量|过期|时间|期|地址|教程"
+                    ]
+                }
             ]
         },
         {
@@ -150,6 +281,14 @@
                 "🔯 故障转移",
                 "🔮 负载均衡",
                 "{all}"
+            ],
+            "filter": [
+                {
+                    "action": "exclude",
+                    "keywords": [
+                        "官网|网站|剩余|流量|过期|时间|期|地址|教程"
+                    ]
+                }
             ]
         },
         {
@@ -160,6 +299,14 @@
                 "DIRECT",
                 "♻️ 自动选择",
                 "{all}"
+            ],
+            "filter": [
+                {
+                    "action": "exclude",
+                    "keywords": [
+                        "官网|网站|剩余|流量|过期|时间|期|地址|教程"
+                    ]
+                }
             ]
         }
     ],
@@ -183,6 +330,92 @@
             },
             {
                 "rule_set": "myrules_proxy",
+                "outbound": "🚀 节点选择"
+            },
+            {
+                "domain_suffix": [
+                    "icloudnative.io",
+                    "fuckcloudnative.io",
+                    "sealos.io",
+                    "cdn.jsdelivr.us"
+                ],
+                "outbound": "DIRECT"
+            },
+            {
+                "process_name": [
+                    "TencentMeeting",
+                    "NemoDesktop",
+                    "ToDesk",
+                    "ToDesk_Service",
+                    "WeChat",
+                    "OpenLens",
+                    "Tailscale",
+                    "wireguard-go",
+                    "Tunnelblick",
+                    "softwareupdated",
+                    "kubectl"
+                ],
+                "outbound": "DIRECT"
+            },
+            {
+                "rule_set": [
+                    "WeChat",
+                    "Bilibili"
+                ],
+                "outbound": "DIRECT"
+            },
+            {
+                "domain_suffix": [
+                    "depay.one",
+                    "orbstack.dev"
+                ],
+                "outbound": "🚀 节点选择"
+            },
+            {
+                "process_name": [
+                    "DropboxMacUpdate",
+                    "Dropbox"
+                ],
+                "outbound": "🚀 节点选择"
+            },
+            {
+                "package_name": [
+                    "com.google.android.youtube",
+                    "com.android.vending",
+                    "org.telegram.messenger",
+                    "org.telegram.plus",
+                    "com.google.android.googlequicksearchbox",
+                    "app.rvx.android.youtube",
+                    "com.mudvod.video",
+                    "com.fox2code.mmm",
+                    "com.twitter.android"
+                ],
+                "outbound": "🚀 节点选择"
+            },
+            {
+                "domain": "accounts.google.com",
+                "domain_suffix": [
+                    "sourceforge.net",
+                    "fhjasokiwq.com"
+                ],
+                "outbound": "🚀 节点选择"
+            },
+            {
+                "domain_suffix": "cloud.sealos.io",
+                "outbound": "🚀 节点选择"
+            },
+            {
+                "type": "logical",
+                "mode": "and",
+                "rules": [
+                    {
+                        "rule_set": "geosite-geolocation-!cn"
+                    },
+                    {
+                        "rule_set": "geoip-cn",
+                        "invert": true
+                    }
+                ],
                 "outbound": "🚀 节点选择"
             },
             {
@@ -235,10 +468,7 @@
                 "outbound": "🎯 全球直连"
             },
             {
-                "rule_set": [
-                    "geoip-cn",
-                    "geosite-cn"
-                ],
+                "rule_set": "geoip-cn",
                 "outbound": "🎯 全球直连"
             }
         ],
@@ -328,13 +558,6 @@
                 "download_detour": "DIRECT"
             },
             {
-                "tag": "geosite-cn",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
-                "download_detour": "DIRECT"
-            },
-            {
                 "tag": "geosite-category-ads-all",
                 "type": "remote",
                 "format": "binary",
@@ -346,20 +569,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
-                "download_detour": "DIRECT"
-            },
-            {
-                "tag": "myrules_proxy",
-                "type": "remote",
-                "format": "source",
-                "url": "https://gitlab.com/wyofnfuk/myrule/-/raw/main/myrules_proxy.json",
-                "download_detour": "DIRECT"
-            },
-            {
-                "tag": "myrules_direct",
-                "type": "remote",
-                "format": "source",
-                "url": "https://gitlab.com/wyofnfuk/myrule/-/raw/main/myrules_direct.json",
                 "download_detour": "DIRECT"
             }
         ],
