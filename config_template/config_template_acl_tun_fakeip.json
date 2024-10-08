@@ -9,7 +9,8 @@
             {
                 "tag": "dns_proxy",
                 "address": "tls://1.1.1.1",
-                "address_resolver": "dns_resolver"
+                "address_resolver": "dns_resolver",
+                "client_subnet": "202.106.195.68"
             },
             {
                 "tag": "dns_direct",
