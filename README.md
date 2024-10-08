@@ -106,4 +106,8 @@ docker run -p 5000:5000 sing-box:latest
   "download_detour": "auto"
 }
 ```
+---
 
+# 订阅转换地址：
+- https://sub.ntf.us.kg/
+- https://sing-box-subscribe-7noz03lgw-whiletrue57s-projects.vercel.app/
