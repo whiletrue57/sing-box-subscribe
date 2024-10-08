@@ -97,7 +97,7 @@
                 "{all}"
             ],
             "url": "http://www.gstatic.com/generate_204",
-            "interval": "5m",
+            "interval": "1440m",
             "tolerance": 200
         },
         {
