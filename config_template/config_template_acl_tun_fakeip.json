@@ -469,7 +469,10 @@
                 "outbound": "🎯 全球直连"
             },
             {
-                "rule_set": "geoip-cn",
+                "rule_set": [
+                    "geoip-cn",
+                    "geosite-cn"
+                ],
                 "outbound": "🎯 全球直连"
             }
         ],

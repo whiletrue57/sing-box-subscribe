@@ -468,7 +468,10 @@
                 "outbound": "🎯 全球直连"
             },
             {
-                "rule_set": "geoip-cn",
+                "rule_set": [
+                    "geoip-cn",
+                    "geosite-cn"
+                ],
                 "outbound": "🎯 全球直连"
             }
         ],
@@ -576,6 +579,20 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "myrules_proxy",
+                "type": "remote",
+                "format": "source",
+                "url": "https://gitlab.com/wyofnfuk/myrule/-/raw/main/myrules_proxy.json",
+                "download_detour": "DIRECT"
+            },
+            {
+                "tag": "myrules_direct",
+                "type": "remote",
+                "format": "source",
+                "url": "https://gitlab.com/wyofnfuk/myrule/-/raw/main/myrules_direct.json",
                 "download_detour": "DIRECT"
             }
         ],
