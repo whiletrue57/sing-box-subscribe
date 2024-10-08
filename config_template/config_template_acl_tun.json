@@ -558,6 +558,13 @@
                 "download_detour": "DIRECT"
             },
             {
+                "tag": "geosite-cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
+                "download_detour": "DIRECT"
+            },
+            {
                 "tag": "geosite-category-ads-all",
                 "type": "remote",
                 "format": "binary",
