@@ -215,7 +215,7 @@
             ],
             "url": "http://www.gstatic.com/generate_204",
             "interval": "30m",
-            "tolerance": 150,
+            "tolerance": 100,
             "filter": [
                 {
                     "action": "exclude",
